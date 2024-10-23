@@ -27,21 +27,16 @@
         </div>
         <div class="content_container">
             <div class="navigate_tab">
+                <div class="search_div">
+                    <input type="text" class="search" placeholder="请输入关键词搜索...">
+                </div>
                 <div class="navigate_top">
                     <h4>数据表</h4>
-                    <ul>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
+                    <el-tree :data="dataTable" empty-text="暂无数据" class="cus_tree"></el-tree>
                 </div>
                 <div class="navigate_bottom">
                     <h4>节点库</h4>
-                    <ul>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
+                    <el-tree :data="dataNode" empty-text="暂无数据" class="cus_tree"></el-tree>
                 </div>
             </div>
             <div class="content">
@@ -51,10 +46,30 @@
 </template>
 <script setup lang='ts'>
     import SVG from '@/components/svg/SVG.vue'
+    import {ref} from 'vue'
 
     defineOptions({
         name: 'Layout'
     })
+
+    let dataTable = ref([
+        {
+            'label':'系统数据源',
+            'children':[
+                {
+                    'label':'表一'
+                },
+                {
+                    'label':'表二'
+                }
+            ],
+        },
+        {
+            'label':'本地数据源',
+            'children':[],
+        }
+    ])
+    let dataNode = ref([])
 </script>
 <style scoped lang='scss'>
     .main_container{
@@ -83,8 +98,8 @@
                     margin-right:10px;
                 }
                 
-                .select_source{
-                    // margin-left:5px;
+                .select_source::after{
+                    content:""
                 }
             }
 
@@ -113,18 +128,33 @@
 
         .content_container {
             display: flex;
-            width: 100%;
-            height: calc(100vh - var(--header_height));
+            //减去padding
+            width: calc(100% - 20px);
+            height: calc(100vh - var(--header_height) - 20px);
+            padding: 10px;
 
             .navigate_tab{
                 display: flex;
-                width: var(--navigate_width);
-                height: 100%;
+                width: calc(var(--navigate_width) - 20px);
+                height: calc(100% - 20px);
+                padding: 10px;
                 flex-direction: column;
                 justify-content: space-between;
-                background-color: rgb(249, 248, 250);
-                padding-left: 10px;
-                padding-right: 10px;
+                // background-color: rgb(249, 248, 250);
+
+                .search {
+                    padding: 3px;
+                    width: calc(100% - 6px);
+                    height: 14px;
+                    transition: .3s all linear;
+                    background: url('@/assets/svgs/search.svg') no-repeat right center / 16px 16px;
+                    background-color: #FFFFFF;
+                    border: 1px solid gray;
+                }
+
+                .search:focus {
+                    outline: none;
+                }
 
                 h4{
                     color: white;
@@ -153,5 +183,15 @@
         }
 
     }
+
+    .cus_tree .el-tree-node{
+        // color:#FFFFFF;
+        // background-color: rgb(112,66,159);
+    }
+
+    .custom-tree .el-tree-node:hover {
+        // background-color: rgb(112,66,159);
+    }
+
     
 </style>
