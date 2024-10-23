@@ -18,11 +18,13 @@
     "@types/node": "^20.16.11",
     "@vitejs/plugin-vue": "^5.1.4",
     "@vue/tsconfig": "^0.5.1",
+    "fast-glob": "^3.3.2",
     "npm-run-all2": "^6.2.3",
     "sass": "^1.80.3",
     "sass-loader": "^16.0.2",
     "typescript": "~5.5.4",
     "vite": "^5.4.8",
+    "vite-plugin-svg-icons": "^2.0.1",
     "vue-tsc": "^2.1.6"
   }
 }
