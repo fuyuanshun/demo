@@ -3,6 +3,23 @@
     padding:0;
     font-size: 12px;
     list-style: none;
+
+
+    ::-webkit-scrollbar {
+        width: 6px;  /* 对于垂直滚动条，设置宽度 */
+        height: 6px; /* 对于水平滚动条，设置高度 */
+    }
+
+    /* 自定义滚动条轨道 */
+    ::-webkit-scrollbar-track {
+        background: #FFFFFF; /* 轨道颜色 */
+    }
+    
+    /* 自定义滚动条的滑块（thumb） */
+    ::-webkit-scrollbar-thumb {
+        background: transparent; /* 滑块颜色 */
+        border-radius: 5px;
+    }
 }
 
 :root{
