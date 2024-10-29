@@ -2,28 +2,22 @@
     <div>
         <el-tree :data="treeData" empty-text="暂无数据" class="cus_tree">
             <template #default="{node, data}">
-                <VueDraggableNext :list="data.children" :key="data.label"
-                @move="cg"
+                <VueDraggableNext :list="data.children" :key="data.label" :clone="cloneElem"
+                @drag="m"
                 @start="startDraggable(data.label)" @end="endDraggable" :disabled="data.parent">
-                    <div style="position:relative">
-                        {{ data.label }}
-                    </div>
+                    <!-- <template v-slot:item="{ element }"> -->
+                        <div style="position:relative;" :class="{cloned:data.isCloned}">
+                            {{ data.label }}
+                        </div>    
+                    <!-- </template> -->
                 </VueDraggableNext>
             </template>
         </el-tree>
-        <div v-if="isDragging" class="dragging-preview" :style="{ top: `${mouseY}px`, left: `${mouseX}px` }">
-            <div class="top">
-                {{ draggingLabel }}
-            </div>
-            <div class="content">
-
-            </div>
-        </div>
     </div>
 </template>
 <script setup lang='ts'>
     import { VueDraggableNext } from 'vue-draggable-next'
-    import { ref } from 'vue'
+    import { ref, inject } from 'vue'
     defineOptions({
         name: 'CusTree'
     })
@@ -32,47 +26,40 @@
     })
 
     let isDragging = ref(false);
-    let mouseX = ref(10)
-    let mouseY = ref(10)
     let draggingLabel = ref('');
+    let state : any = inject('state')
+
+    const updateState = ()=> {
+        state.isDragging = isDragging;
+        state.draggingLabel = draggingLabel;
+    }
 
     function startDraggable(data:string){
         isDragging.value = true;
         draggingLabel.value = data
+        updateState();
     }
 
     function endDraggable(){
         isDragging.value = false;
-        console.log(mouseX.value, mouseY.value)
+        updateState()
+
     }
 
-    function cg(){
-        console.log("....")
+    function cloneElem(item:any){
+        return {...item, isCloned: true}
+    }
+
+    function m(e:DragEvent){
+        if(e.clientX == 0 && e.clientY == 0){
+            return;
+        }
+        state.mouseX = e.clientX
+        state.mouseY = e.clientY
     }
 </script>
 <style scoped lang='scss'>
-    .dragging-preview {
-        position: absolute;
-        width:120px;
-        height:100px;
-        pointer-events: none; /* 使其不干扰鼠标事件 */
-        display: flex;
-        flex-direction: column;
-        box-shadow: 1px 1px 3px gray;
-        border-radius: 10px;
-        overflow: hidden;
-
-        .top{
-            width: 100%;
-            height: 20px;
-            background-color: aquamarine;
-            text-align: center;
-        }
-
-        .content{
-            width: 100%;
-            height: calc(100% - 10px);
-            background-color: #FFFFFF;
-        }
+    .cloned{
+        color:transparent
     }
 </style>
