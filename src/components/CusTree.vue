@@ -5,11 +5,9 @@
                 <VueDraggableNext :list="data.children" :key="data.label" :clone="cloneElem"
                 @drag="m"
                 @start="startDraggable(data.label)" @end="endDraggable" :disabled="data.parent">
-                    <!-- <template v-slot:item="{ element }"> -->
-                        <div style="position:relative;" :class="{cloned:data.isCloned}">
-                            {{ data.label }}
-                        </div>    
-                    <!-- </template> -->
+                    <div style="position:relative;" :class="{cloned:data.isCloned}">
+                        {{ data.label }}
+                    </div>    
                 </VueDraggableNext>
             </template>
         </el-tree>
@@ -18,6 +16,8 @@
 <script setup lang='ts'>
     import { VueDraggableNext } from 'vue-draggable-next'
     import { ref, inject } from 'vue'
+    import State from '../types/State.ts'
+
     defineOptions({
         name: 'CusTree'
     })
@@ -27,7 +27,7 @@
 
     let isDragging = ref(false);
     let draggingLabel = ref('');
-    let state : any = inject('state')
+    let state : State = inject('state')
 
     const updateState = ()=> {
         state.isDragging = isDragging;

@@ -23,12 +23,13 @@ import Content from './layout/Content.vue';
 import Header from './layout/Header.vue';
 import Navigate from './layout/Navigate.vue';
 import { ref, reactive, provide } from 'vue'
+import State from '../types/State.ts'
 
 defineOptions({
     name: 'Layout'
 })
 
-const state = reactive({
+const state:State = reactive({
     isDragging:false,
     draggingLabel:'',
     mouseX:0,
@@ -40,11 +41,11 @@ provide('state', state)
 const originDiv = ref()
 const container = ref();
 
-function copy(x, y){
+function copy(){
     if (originDiv.value) {
         const clone = originDiv.value.cloneNode(true); // 克隆原始 div
         container.value.appendChild(clone); // 将克隆的元素添加到目标容器
-      }
+    }
 }
 
 </script>
