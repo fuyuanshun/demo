@@ -1,5 +1,5 @@
 <template>
-    <div class="main_container">
+    <div class="main_container" ref="container">
         <Header></Header>
         <div class="content_container">
             <Navigate></Navigate>
@@ -7,7 +7,7 @@
             <ComponentInfo></ComponentInfo>
         </div>
 
-        <div v-if="state.isDragging" class="dragging-preview" :style="{ top: `${state.mouseY}px`, left: `${state.mouseX}px` }">
+        <div ref="originDiv" v-if="state.isDragging" class="dragging-preview" :style="{ top: `${state.mouseY}px`, left: `${state.mouseX}px` }">
             <div class="top">
                 {{ state.draggingLabel }}
             </div>
@@ -32,9 +32,20 @@ const state = reactive({
     isDragging:false,
     draggingLabel:'',
     mouseX:0,
-    mouseY:0
+    mouseY:0,
+    copy:copy
 })
 provide('state', state)
+
+const originDiv = ref()
+const container = ref();
+
+function copy(x, y){
+    if (originDiv.value) {
+        const clone = originDiv.value.cloneNode(true); // 克隆原始 div
+        container.value.appendChild(clone); // 将克隆的元素添加到目标容器
+      }
+}
 
 </script>
 <style scoped lang='scss'>

@@ -44,6 +44,7 @@
         isDragging.value = false;
         updateState()
 
+        state.copy(200,200)
     }
 
     function cloneElem(item:any){
