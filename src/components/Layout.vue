@@ -3,26 +3,16 @@
         <Header></Header>
         <div class="content_container">
             <Navigate></Navigate>
-            <Content></Content>
+            <Content :isDraggable="state.isDragging"></Content>
             <ComponentInfo></ComponentInfo>
         </div>
-<!-- 
-        <div ref="originDiv" v-if="state.isDragging" class="dragging-preview" :style="{ top: `${state.mouseY}px`, left: `${state.mouseX}px` }">
-            <div class="top">
-                {{ state.draggingLabel }}
-            </div>
-            <div class="content">
-                <ul>
-                    <li>温度</li>
-                    <li>湿度</li>
-                    <li>噪音</li>
-                </ul>
-            </div>
-        </div> -->
+        <!-- 用于拖拽过程中的展示 -->
+        <component v-if="state.isDragging" :is="LabelInfoDiv" :mouseX="state.mouseX" :mouseY="state.mouseY" :label="state.draggingLabel"></component>
+
+        <!-- 用于拖拽完成后展示 -->
         <component v-for="comp in comps" :is="LabelInfoDiv" ref="originDiv" :mouseX="comp.x" :mouseY="comp.y" :label="comp.content">
             <template #default="">
                 <div>
-                    
                 </div>
             </template>
         </component>
@@ -34,12 +24,8 @@ import Content from './layout/Content.vue';
 import Header from './layout/Header.vue';
 import Navigate from './layout/Navigate.vue';
 import { ref, reactive, provide } from 'vue'
-<<<<<<< Updated upstream
-import State from '../types/State.ts'
-=======
 import type State from '../types/State.ts'
 import LabelInfoDiv from './LabelInfoDiv.vue';
->>>>>>> Stashed changes
 
 defineOptions({
     name: 'Layout'
@@ -60,12 +46,6 @@ provide('state', state)
 const originDiv = ref()
 const container = ref();
 
-<<<<<<< Updated upstream
-function copy(){
-    if (originDiv.value) {
-        const clone = originDiv.value.cloneNode(true); // 克隆原始 div
-        container.value.appendChild(clone); // 将克隆的元素添加到目标容器
-=======
 function copy(x:number, y:number, draggingLabel:string){
     // if (originDiv.value && x > 170 && y > 40) {
     //     const clone = originDiv.value.cloneNode(true); // 克隆原始 div
@@ -75,7 +55,6 @@ function copy(x:number, y:number, draggingLabel:string){
         content:draggingLabel,
         x:x,
         y:y
->>>>>>> Stashed changes
     }
     comps.value.push(newComponent)
 }

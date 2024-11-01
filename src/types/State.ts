@@ -1,6 +1,6 @@
-interface State{
+export default interface State{
     isDragging:boolean,
-    draggingLabel:string,
+    draggingLabel:String,
     mouseX:number,
     mouseY:number,
     copy:Function

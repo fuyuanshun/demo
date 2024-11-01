@@ -5,9 +5,9 @@
                 <VueDraggableNext :list="data.children" :key="data.label"
                 @drag="m"
                 @start="startDraggable(data.label)" @end="endDraggable" :disabled="data.parent">
-                    <div style="position:relative;" :class="{cloned:data.isCloned}">
+                    <div style="position:relative;" :class="{isdragging:state.isDragging, cursor_move:!data.parent}">
                         {{ data.label }}
-                    </div>    
+                    </div>
                 </VueDraggableNext>
             </template>
         </el-tree>
@@ -56,7 +56,7 @@
     }
 </script>
 <style scoped lang='scss'>
-    .cloned{
-        color:transparent
+    .cursor_move{
+        cursor: move;
     }
 </style>
