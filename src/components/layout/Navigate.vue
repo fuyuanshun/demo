@@ -145,14 +145,17 @@ let dataNode = ref(
             ]
         },
         {
-            'label': '个人组件',
+            'label': '数据存储',
             'parent':true,
+            'type':2,
             children: [
                 {
-                    'label': '字段'
+                    'label': '字段',
+                    'type':2,
                 },
                 {
-                    'label': '表'
+                    'label': '表',
+                    'type':2
                 }
             ]
         }

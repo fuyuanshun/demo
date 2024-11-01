@@ -4,7 +4,7 @@
             <template #default="{node, data}">
                 <VueDraggableNext :list="data.children" :key="data.label"
                 @drag="m"
-                @start="startDraggable(data.label)" @end="endDraggable" :disabled="data.parent">
+                @start="startDraggable(data.label, data.type)" @end="endDraggable(data.type)" :disabled="data.parent">
                     <div style="position:relative;" :class="{isdragging:state.isDragging, cursor_move:!data.parent}">
                         {{ data.label }}
                     </div>
@@ -27,24 +27,29 @@
 
     let isDragging = ref(false);
     let draggingLabel = ref('');
+    let titleColor = ref('')
     let state : State = inject('state')!
 
     const updateState = ()=> {
         state.isDragging = isDragging.value;
         state.draggingLabel = draggingLabel.value;
+        state.titleColor =  titleColor.value
     }
 
-    function startDraggable(data:string){
+    function startDraggable(data:string, type:number){
         isDragging.value = true;
         draggingLabel.value = data
+
+        titleColor.value = type == 2 ? 'yellow' : 'aquamarine';
         updateState();
     }
 
-    function endDraggable(){
+    function endDraggable(type:number){
         isDragging.value = false;
         updateState()
 
-        state.copy(state.mouseX, state.mouseY, state.draggingLabel)
+        titleColor.value = type == 2 ? 'yellow' : 'aquamarine';
+        state.copy(state.mouseX, state.mouseY, state.draggingLabel, titleColor.value)
     }
 
     function m(e:DragEvent){

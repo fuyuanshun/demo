@@ -1,6 +1,6 @@
 <template>
     <div class="dragging-preview" :style="{ top: `${mouseY}px`, left: `${mouseX}px` }">
-        <div class="top">
+        <div class="top" :class="titleColor">
             {{ label }}
         </div>
         <div class="content">
@@ -13,7 +13,7 @@
         name: 'LabelInfoDiv'
     })
 
-    defineProps(['mouseX', 'mouseY', 'label'])
+    defineProps(['mouseX', 'mouseY', 'label', 'titleColor'])
 </script>
 <style scoped lang='scss'>
 .dragging-preview {
@@ -30,7 +30,7 @@
         .top{
             width: 100%;
             height: 20px;
-            background-color: aquamarine;
+            // background-color: aquamarine;
             text-align: center;
         }
 
@@ -42,5 +42,13 @@
             align-items: center;
             justify-content: center;
         }
+    }
+
+    .aquamarine{
+        background-color: aquamarine;
+    }
+
+    .yellow{
+        background-color: rgb(252,223,184)
     }
 </style>

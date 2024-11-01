@@ -3,5 +3,6 @@ export default interface State{
     draggingLabel:String,
     mouseX:number,
     mouseY:number,
-    copy:Function
+    copy:Function,
+    titleColor:String
 }
