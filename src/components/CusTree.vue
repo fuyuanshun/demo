@@ -2,7 +2,7 @@
     <div>
         <el-tree :data="treeData" empty-text="暂无数据" class="cus_tree">
             <template #default="{node, data}">
-                <VueDraggableNext :list="data.children" :key="data.label" :clone="cloneElem"
+                <VueDraggableNext :list="data.children" :key="data.label"
                 @drag="m"
                 @start="startDraggable(data.label)" @end="endDraggable" :disabled="data.parent">
                     <div style="position:relative;" :class="{cloned:data.isCloned}">
@@ -16,7 +16,7 @@
 <script setup lang='ts'>
     import { VueDraggableNext } from 'vue-draggable-next'
     import { ref, inject } from 'vue'
-    import State from '../types/State.ts'
+    import type State from '../types/State.ts'
 
     defineOptions({
         name: 'CusTree'
@@ -27,11 +27,11 @@
 
     let isDragging = ref(false);
     let draggingLabel = ref('');
-    let state : State = inject('state')
+    let state : State = inject('state')!
 
     const updateState = ()=> {
-        state.isDragging = isDragging;
-        state.draggingLabel = draggingLabel;
+        state.isDragging = isDragging.value;
+        state.draggingLabel = draggingLabel.value;
     }
 
     function startDraggable(data:string){
@@ -44,11 +44,7 @@
         isDragging.value = false;
         updateState()
 
-        state.copy(200,200)
-    }
-
-    function cloneElem(item:any){
-        return {...item, isCloned: true}
+        state.copy(state.mouseX, state.mouseY, state.draggingLabel)
     }
 
     function m(e:DragEvent){
