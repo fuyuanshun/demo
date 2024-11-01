@@ -4,11 +4,7 @@
             {{ label }}
         </div>
         <div class="content">
-            <ul>
-                <li>温度</li>
-                <li>湿度</li>
-                <li>噪音</li>
-            </ul>
+            <slot></slot>
         </div>
     </div>
 </template>

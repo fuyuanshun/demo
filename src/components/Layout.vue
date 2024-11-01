@@ -7,13 +7,24 @@
             <ComponentInfo></ComponentInfo>
         </div>
         <!-- 用于拖拽过程中的展示 -->
-        <component v-if="state.isDragging" :is="LabelInfoDiv" :mouseX="state.mouseX" :mouseY="state.mouseY" :label="state.draggingLabel"></component>
+        <component v-if="state.isDragging" :is="LabelInfoDiv" :mouseX="state.mouseX" :mouseY="state.mouseY" :label="state.draggingLabel">
+            <template #default>
+                <ul>
+                    <li>温度</li>
+                    <li>湿度</li>
+                    <li>噪音</li>
+                </ul>
+            </template>
+        </component>
 
         <!-- 用于拖拽完成后展示 -->
         <component v-for="comp in comps" :is="LabelInfoDiv" ref="originDiv" :mouseX="comp.x" :mouseY="comp.y" :label="comp.content">
-            <template #default="">
-                <div>
-                </div>
+            <template #default>
+                <ul>
+                    <li>温度</li>
+                    <li>湿度</li>
+                    <li>噪音</li>
+                </ul>
             </template>
         </component>
     </div>
@@ -47,16 +58,14 @@ const originDiv = ref()
 const container = ref();
 
 function copy(x:number, y:number, draggingLabel:string){
-    // if (originDiv.value && x > 170 && y > 40) {
-    //     const clone = originDiv.value.cloneNode(true); // 克隆原始 div
-    //     container.value.appendChild(clone); // 将克隆的元素添加到目标容器
-    // }
     const newComponent = {
         content:draggingLabel,
         x:x,
         y:y
     }
-    comps.value.push(newComponent)
+    if (x > 170 && y > 40) {
+        comps.value.push(newComponent)
+    }
 }
 
 </script>
